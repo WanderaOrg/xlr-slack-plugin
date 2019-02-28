@@ -36,7 +36,7 @@ The available tasks for interfacing with Slack. These tasks utilize the Slack RE
 The Slack notification task needs the next information:
 
 - **Server:** The Slack server definition to use.
-- **Channel:** The target for the notification, use `#` or `@` to refer to a channel or direct message.
+- **Channel:** Comma separated list of targets for the notification, use `#` or `@` to refer to a channel or direct message.
 - **Message:** The notification message text, it could be [formatted](https://api.slack.com/docs/formatting).
 
 ![notification](images/notification.png)

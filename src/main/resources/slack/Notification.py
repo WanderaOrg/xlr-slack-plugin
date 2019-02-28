@@ -54,13 +54,14 @@ if proxyUrl:
 try:
     request = urllib2.Request(url)
     request.add_header('Content-Type', 'application/json')
-    postdata = {}
-    if icon:
-        postdata = {'channel': channel.strip(), 'username': user.strip(), 'icon_emoji': icon.strip(), 'text': message.strip(), 'mrkdwn': True}
-    else:
-        postdata = {'channel': channel.strip(), 'username': user.strip(), 'text': message.strip(), 'mrkdwn': True}
-    data = json.dumps(postdata)
-    response = urllib2.urlopen(request, data)
+    for item in channel.split(','):
+        postdata = {}
+        if icon:
+            postdata = {'channel': item.strip(), 'username': user.strip(), 'icon_emoji': icon.strip(), 'text': message.strip(), 'mrkdwn': True}
+        else:
+            postdata = {'channel': item.strip(), 'username': user.strip(), 'text': message.strip(), 'mrkdwn': True}
+        data = json.dumps(postdata)
+        response = urllib2.urlopen(request, data)
 except urllib2.HTTPError as error:
     print 'HTTP %s error!' % error.code
     print 'Reason: %s' % error.read()

@@ -1,6 +1,6 @@
 language: java
 before_install:
-  - chmod +x gradlew
+- chmod +x gradlew
 deploy:
   provider: releases
   api_key:
@@ -10,3 +10,6 @@ deploy:
   on:
     tags: true
     repo: xebialabs-community/xlr-slack-plugin
+notifications:
+  slack:
+    secure: htySbd9FKMYAN2cWTWLNI2WkXfGchpq5/tFKAiN4OLPrMNLjUWbju5lSRfMxEJYpYbjRBigNTo/9m60e1MeQ4QFlgPJbwTRo+23IOdsNhlMUjjwFSszJMUgk3MharBriETwEZz+TbkIgSvzT+t4TEoU3JI1c0NuI2KBfQCKDWkK/t0sNohZeOCrkn2IPx24kd5JA56fPFF1FpNWxPr5keCfCFgD6A+TsBijtNTOIPLoZ65Xd3nqHqjH0k0Y43iRV/cEGvUxjibcH7UqYiB+EU3cmGjkYYFYKiNQKuf0rtUBtCm6D5do4FE8dNAN4pRb1t4sQNNNrXqsa5nUG59MkXn6RNl4JZ95rmwMZO223GErUzTlXCYAnw8xqr80dvhmCMXfHXdkYUM4q3WgBmY2L6Sngxvho2OSe5FJpI0F46HwosyBVacfbC5bjPdpAtB2x0o1dIjxWicvYLnUS9wJr5f30Pw6YSm3RsEDrhwWDZTt8wW9BVqgFDBJs57RQiyggIdp07SglOTzJsypwzyQ+7egHUR40QQGqqSoaxMjAwodLvXdmNrB7pSs7gGY5fEAWyD3Dgj7iyF5DIfoKy3Nh5yIPpM1BxQye4+0PUvXMxa5u4v92ZrHV80GlvkKuSKdJJ18lCW/qgWmV1821wbXgOTODBvYKt13IVyaW744u3AA=

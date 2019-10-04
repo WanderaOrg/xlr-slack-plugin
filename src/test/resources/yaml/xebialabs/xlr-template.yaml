@@ -1,0 +1,48 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- directory: slack
+  children:
+  - template: Slack_Test
+    scheduledStartDate: 2019-10-03T13:00:00Z
+    phases:
+    - phase: Send Messages
+      tasks:
+      - name: Send Message
+        type: slack.Notification
+        server: slackbot
+        channel: '#general'
+        message: Hello world
+      - name: Verify Message
+        type: xlrelease.GateTask
+        owner: admin
+      color: '#0099CC'
+    - phase: New Channel
+      tasks:
+      - name: Create New Channel
+        type: slack.CreateChannel
+        server: slackbot
+        channel: '#this-is-a-test'
+      - name: Send Message to new channel
+        type: slack.Notification
+        server: slackbot
+        channel: '#this-is-a-test'
+        message: Hello to new channel
+      - name: Verify Channel and Messages
+        type: xlrelease.GateTask
+        owner: admin
+      color: '#08B153'
+    - phase: Add Users to Channel
+      tasks:
+      - name: Add Users
+        type: slack.AddUsersToChannel
+        server: slackbot
+      - name: Send Messages to new Users
+        type: slack.Notification
+        server: slackbot
+      - name: Verify users added and Messages
+        type: xlrelease.GateTask
+        owner: admin
+      color: '#FD8D10'
+    riskProfile: Default risk profile

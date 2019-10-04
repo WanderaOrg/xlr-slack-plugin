@@ -41,7 +41,19 @@ The Slack notification task needs the next information:
 
 ![notification](images/notification.png)
 
---- 
+
+## Slack Permissions:
+- Access information about user's public channels `channels:read`
+- Modify your private channels `channels:write`
+- Post to specific channels in Slack `incomming-webhook`
+- Add a bot user with the username *@<botname>* `bot`
+- Access your workspace's profile information `users:read`
+- View email addresses of people on this workspace `users:read.email`
+
+---
 ## References:
 * [Slack Rest API](https://api.slack.com/web)
-
+* [Slack Rest API->Create Channel](https://api.slack.com/methods/channels.create)
+* [Slack Rest API->Channels Invite](https://api.slack.com/methods/channels.invite)
+* [Slack Rest API->Users Info](https://api.slack.com/methods/users.info)
+* [Slack Rest API->](https://api.slack.com/methods/users.lookupByEmail)

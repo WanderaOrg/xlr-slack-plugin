@@ -1,11 +1,13 @@
 language: java
+jdk: openjdk8
 before_install:
 - chmod +x gradlew
 deploy:
   provider: releases
   api_key:
     secure: KGvqBU3jlrqtmciLW0PM2Hm8XbcXbARcgQLHJpLWFPKe1fR3brRU0PVnZjxPDFEwN8ehNT4DdL8VehutvJZTELyF4xH2OMMLKKgdfBCjB6oJ3mqOBTzvKo3Vdq1JhVtL+4Uc6DASscPwRd06stC6UPGdMDMMRwROWf/VmvWRCb1tjNFM6/Vbx/JE4XESkACvDn8mopYNPRhwvQbiAJAd9tmlcBvrwLRJ7jdcoTMKDDhoCJnfarjvxIvrbTiTeb9dz81vFLA8h7pVTuoVwgomlAzKzXKA3r2Ub2zIa+3EhXbmfGKFGReG9rOJ57r7mxSCgZTP+xi3VcH35hJyHbAOhs+7aOIbxZ90G/tVknA0UtOFe9MIqVApjn3VCAuOki24xITSsDdFt5t1qpmWNGVXfO/1kXacGHcezhTM9qlMrKosKCkezkMAMzcKnwsSmZXP+IwlhgCKdbJsHrcHbBsPF1Crkav07daBUX8nTcnsHsZAYE76S9pMJi4TXyVe93zFUv+o4lM47QWrYVOeZc1zlFpzI8rlt+OF9dczRQJ78McYh0gbhDMA8GZ4nVyRfMq/N+cjWsnHSISgxEdKQBvIbPE86hgH44ckDGdbwJBY6LcDNLMJ/e6yCQ5OX5CFnUEHAuQj2nXkGq0KBTCHvB1RGL9hQCg/UyXUxjggYrRbC+o=
-  file: build/libs/xlr-slack-plugin-1.0.0.jar
+  file_glob: true
+  file: build/libs/*
   skip_cleanup: true
   on:
     tags: true

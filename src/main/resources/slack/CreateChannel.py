@@ -9,41 +9,24 @@
 #
 
 import json
-import urllib2
-
-
-def printData(url, data):
-    print
-    print 'URL:'
-    print '```'
-    print url
-    print '```'
-    print 'Data:'
-    print '```'
-    print data
-    print '```'
+import requests
 
 # Initialize variables & check parameters
 response = ''
-url = server['url']
-user = server['userName']
-icon = server['userIcon']
+url = "%s/channels.create" % (server['api'])
+token = server['clientToken']
 proxyUrl = server['proxyUrl']
 if not url.strip():
     print 'Error!'
     print 'Server configuration url undefined\n'
     sys.exit(100)
-if not user.strip():
+if not token.strip():
     print 'Error!'
-    print 'Server configuration user name undefined\n'
+    print 'Server configuration user token undefined\n'
     sys.exit(100)
 if not channel.strip():
     print 'Error!'
     print 'Parameter channel undefined\n'
-    sys.exit(200)
-if not message.strip():
-    print 'Error!'
-    print 'Parameter message undefined\n'
     sys.exit(200)
 
 # Set up proxy
@@ -55,30 +38,22 @@ if proxyUrl:
     urllib2.install_opener(opener)
 
 # Call Slack Incoming WebHook
-try:
-    request = urllib2.Request(url)
-    request.add_header('Content-Type', 'application/json')
-    postdata = {}
-    if icon:
-        postdata = {'channel': channel.strip(), 'username': user.strip(), 'icon_emoji': icon.strip(), 'text': message.strip(), 'mrkdwn': True}
-    else:
-        postdata = {'channel': channel.strip(), 'username': user.strip(), 'text': message.strip(), 'mrkdwn': True}
-    data = json.dumps(postdata)
-    response = urllib2.urlopen(request, data)
-except urllib2.HTTPError as error:
-    print 'HTTP %s error!' % error.code
-    print 'Reason: %s' % error.read()
-    printData(url, data)
-    sys.exit(300)
-except urllib2.URLError as error:
-    print 'Network error!'
-    print 'Reason: %s' % error.reason
-    printData(url, data)
-    sys.exit(400)
-
+url = "%s?name=%s&validate=true" % ( url, channel.strip() )
+headers = {'Content-Type': 'application/x-www-form-urlencoded',
+           'Authorization': 'Bearer %s' % token
+          }
+print "url = %s" % url
+print "headers = %s" % headers
+myResponse = requests.get(url, headers=headers, verify=False)
+if myResponse.ok:
+    print "Completed ok"
+    resData = json.loads(myResponse.content)
+    print json.dumps(resData, indent=4, sort_keys=True)
+    channelId = resData['channel']['id']
+    print "Channel ID = %s" % channelId
+else:
+    print "Failed to create channel"
+    sys.exit(200)
 # Print output
-print 'Slack message to channel %s sent successfully' % channel
-print '```'
-print message
-print '```'
+print 'Slack channel %s created successfully' % channel
 sys.exit(0)

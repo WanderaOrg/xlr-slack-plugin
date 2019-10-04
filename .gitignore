@@ -114,3 +114,7 @@ venv.bak/
 # Java
 .classpath
 .project
+
+# OS/X
+.DS_Store
+*.xlvals

@@ -56,4 +56,5 @@ The Slack notification task needs the next information:
 * [Slack Rest API->Create Channel](https://api.slack.com/methods/channels.create)
 * [Slack Rest API->Channels Invite](https://api.slack.com/methods/channels.invite)
 * [Slack Rest API->Users Info](https://api.slack.com/methods/users.info)
-* [Slack Rest API->](https://api.slack.com/methods/users.lookupByEmail)
+* [Slack Rest API->Chat Post Message](https://api.slack.com/methods/chat.postMessage)
+* [Slack Rest API->lookup By Email](https://api.slack.com/methods/users.lookupByEmail)

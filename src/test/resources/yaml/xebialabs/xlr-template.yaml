@@ -6,6 +6,7 @@ spec:
   children:
   - template: Slack_Test
     scheduledStartDate: 2019-10-03T13:00:00Z
+    dueDate: 2019-10-06T15:45:32.129Z
     phases:
     - phase: Send Messages
       tasks:
@@ -24,10 +25,12 @@ spec:
         type: slack.CreateChannel
         server: slackbot
         channel: '#this-is-a-test'
+        variableMapping:
+          pythonScript.channelId: ${channelId}
       - name: Send Message to new channel
-        type: slack.Notification
+        type: slack.postMessage
         server: slackbot
-        channel: '#this-is-a-test'
+        channelId: ${channelId}
         message: Hello to new channel
       - name: Verify Channel and Messages
         type: xlrelease.GateTask
@@ -38,11 +41,21 @@ spec:
       - name: Add Users
         type: slack.AddUsersToChannel
         server: slackbot
+        channel: ${channelId}
+        users:
+        - rick_broker@yahoo.com
       - name: Send Messages to new Users
-        type: slack.Notification
+        type: slack.postMessage
         server: slackbot
+        channelId: ${channelId}
+        message: Added Users
       - name: Verify users added and Messages
         type: xlrelease.GateTask
         owner: admin
       color: '#FD8D10'
+    variables:
+    - type: xlrelease.StringVariable
+      key: channelId
+      requiresValue: false
+      showOnReleaseStart: false
     riskProfile: Default risk profile

@@ -15,9 +15,9 @@ import re
 
 # Initialize variables & check parameters
 response = ''
-url = "%s/channels.create" % (server['api'])
 token = server['clientToken']
 proxyUrl = server['proxyUrl']
+url = "%s/chat.postMessage" % ( server['api'] )
 if not url.strip():
     print 'Error!'
     print 'Server configuration url undefined\n'
@@ -26,11 +26,6 @@ if not token.strip():
     print 'Error!'
     print 'Server configuration user token undefined\n'
     sys.exit(100)
-if not channel.strip():
-    print 'Error!'
-    print 'Parameter channel undefined\n'
-    sys.exit(200)
-
 # Set up proxy
 # proxyUrl format: 'http:// username:password@proxyurl:proxyport'
 if proxyUrl:
@@ -40,8 +35,9 @@ if proxyUrl:
     urllib2.install_opener(opener)
 
 # Call Slack Incoming WebHook
-channel = re.sub("#|@", "", channel)
-url = "%s?name=%s&validate=true" % ( url, channel.strip() )
+query_args = {'channel': channelId, "text": message}
+encoded_args = urllib.urlencode(query_args)
+url = "%s?%s" % (url, encoded_args)
 try:
     request = urllib2.Request( url )
     request.add_header('Content-Type', 'application/x-www-form-urlencoded')
@@ -50,9 +46,8 @@ try:
     data = json.load(myResponse)
     if( not data['ok'] ):
         print "url = %s\n\n" % url
-        print "Error: %s " % data['detail']
+        print "Error: %s " % data['error']
         sys.exit(100)
-    channelId = data['channel']['id']
 except urllib2.HTTPError as error:
     print myResponse.info()
     print 'HTTP %s error!' % error.code
@@ -67,5 +62,4 @@ except urllib2.URLError as error:
     sys.exit(400)
 
 # Print output
-print 'Slack channel %s created successfully' % channel
 sys.exit(0)

@@ -42,10 +42,10 @@
         <property name="users" category="input" kind="list_of_string" label="Users" description="A list of users to add to a channel" required="true"/>
     </type>
 
-<!--
-    <type type="slack.FindUsersByEmail" extends="slack.Task">
-        <property name="userEmails" category="input" kind="list_of_string" label="Users" description="A list of users to add to a channel" required="true"/>
-        <property name="userIds" category="input" kind="list_of_string" label="Users" description="A list of users to add to a channel" />
+    <type type="slack.postMessage" extends="slack.Task">
+        <property name="channelId" category="input" label="Channel ID" description="The channel ID"
+        required="true"/>
+        <property name="message" category="input" label="Message" description="The notification message text" required="true"/>
     </type>
--->
+
 </synthetic>

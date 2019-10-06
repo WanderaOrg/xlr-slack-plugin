@@ -44,16 +44,17 @@ The Slack notification task needs the next information:
 ## CreateChannel task
 This task creates a new channel in slack
 
+![CreateChannel](images/CreateChannel.png)
 
 ## AddUsersToChannel
 This task adds a list of users based on their email addresses
 
-
+![AddUsersToChannel](images/AddUsersToChannel.png)
 
 ## postMessage
 This task posts a message to a slack channel based on the channel's ID
 
-
+![postMessage](images/postMessage.png)
 
 ## Slack Permissions:
 - Access information about user's public channels `channels:read`

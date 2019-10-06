@@ -46,6 +46,7 @@ try:
     data = json.load(myResponse)
     if( not data['ok'] ):
         print "url = %s\n\n" % url
+        print json.dumps(data, indent=4, sort_keys=True)
         print "Error: %s " % data['error']
         sys.exit(100)
 except urllib2.HTTPError as error:

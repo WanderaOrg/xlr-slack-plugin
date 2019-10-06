@@ -50,7 +50,8 @@ try:
     data = json.load(myResponse)
     if( not data['ok'] ):
         print "url = %s\n\n" % url
-        print "Error: %s " % data['detail']
+        print json.dumps(data, indent=4, sort_keys=True)
+        print "Error: %s " % data['error']
         sys.exit(100)
     channelId = data['channel']['id']
 except urllib2.HTTPError as error:

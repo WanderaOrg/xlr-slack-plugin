@@ -56,14 +56,44 @@ This task posts a message to a slack channel based on the channel's ID
 
 ![postMessage](images/postMessage.png)
 
-## Slack Permissions:
-- Access information about user's public channels `channels:read`
-- Modify your private channels `channels:write`
-- Post to specific channels in Slack `incomming-webhook`
-- Add a bot user with the username *@<botname>* `bot`
-- Access your workspace's profile information `users:read`
-- View email addresses of people on this workspace `users:read.email`
+## Adding Slack App
+This plugin needs a **Slack** to communicate.  You can create a custom app to to by doing the following:
 
+1. Got to [https://api.slack.com/apps](https://api.slack.com/apps) to start building your app
+
+  ![YourApps](images/yourapps.png)
+
+2. **Create a Slack App** - provide *App Name* and *Workspace*
+
+  ![createaslackapp](images/createaslackapp.png)
+
+3. **Add features and functionality** - *Incoming Webhooks* & *Permissions*
+
+  a. **Incoming Webhooks**
+
+  ![incomingwebhooks](images/incomingwebhooks.png)
+
+  Keep track of the `Webhook URL`.  This will be the URL for sending notifications.
+
+  b. **Permissions**
+
+  ![permissions](images/permissions1.png)
+  ![permissions](images/permissions2.png)
+  ![permissions](images/permissions3.png)
+
+  Add **Slack Permissions** as follows:
+  - Access information about user's public channels `channels:read`
+  - Modify your private channels `channels:write`
+  - Post to specific channels in Slack `incomming-webhook`
+  - Add a bot user with the username *@<botname>* `chat:write:user`
+  - Access your workspace's profile information `users:read`
+  - View email addresses of people on this workspace `users:read.email`
+
+  Keep track of the `OAuth Token` and **Reinstall App**
+
+  Use the `Webhook URL` and the `OAuth Token` to configure the connection in *XL Release*
+
+  
 ---
 ## References:
 * [Slack Rest API](https://api.slack.com/web)

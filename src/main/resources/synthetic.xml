@@ -37,6 +37,13 @@
         <property name="channelId" category="output" label="Channel ID" description="The channel ID"  />
     </type>
 
+    <type type="slack.CreateConversation" extends="slack.Task">
+        <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
+        <property name="isPrivate" category="input" kind="boolean" label="Is Private" description="Create a private channel instead of a public one" required="true"/>
+        <property name="users" category="input" kind="list_of_string" label="Users" description="A list of users to add to a channel" required="true"/>
+        <property name="channelId" category="output" label="Channel ID" description="The channel ID"  />
+    </type>
+
     <type type="slack.AddUsersToChannel" extends="slack.Task">
         <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
         <property name="users" category="input" kind="list_of_string" label="Users" description="A list of users to add to a channel" required="true"/>

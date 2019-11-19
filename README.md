@@ -85,7 +85,7 @@ This plugin needs a **Slack** to communicate.  You can create a custom app to to
   - Access information about user's public channels `channels:read`
   - Modify your private channels `channels:write`
   - Post to specific channels in Slack `incomming-webhook`
-  - Add a bot user with the username *@<botname>* `chat:write:user`
+  - Add a bot user with the username *@<botname>* `chat:write:bot`
   - Access your workspace's profile information `users:read`
   - View email addresses of people on this workspace `users:read.email`
 
@@ -93,11 +93,12 @@ This plugin needs a **Slack** to communicate.  You can create a custom app to to
 
   Use the `Webhook URL` and the `OAuth Token` to configure the connection in *XL Release*
 
-  
+
 ---
 ## References:
 * [Slack Rest API](https://api.slack.com/web)
 * [Slack Rest API->Create Channel](https://api.slack.com/methods/channels.create)
+* [Slack Rest API->Create Conversation](https://api.slack.com/methods/conversations.create)
 * [Slack Rest API->Channels Invite](https://api.slack.com/methods/channels.invite)
 * [Slack Rest API->Users Info](https://api.slack.com/methods/users.info)
 * [Slack Rest API->Chat Post Message](https://api.slack.com/methods/chat.postMessage)

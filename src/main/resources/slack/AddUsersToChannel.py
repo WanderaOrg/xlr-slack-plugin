@@ -46,7 +46,7 @@ def addUserIdToChannel(server, channel, userId):
         print 'Reason: %s' % error.reason
         print "url = %s" % url
         return {'status': 400 }
-    return {'status': 100 }
+    return {'status': 0 }
 
 def getUserIdByEmail(server, userEmail):
     try:

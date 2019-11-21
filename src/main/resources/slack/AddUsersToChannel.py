@@ -30,6 +30,12 @@ def addUserIdToChannel(server, channel, userId):
             if( data['error'] == "cant_invite_self" ):
                 print "Oops,  Invited myself"
                 return {'status': 0 }
+            if( data['error'] == "already_in_channel" ):
+                print "Oops,  User is already in the channel"
+                return {'status': 0 }
+            if( data['error'] == "user_not_found" ):
+                print "Oops,  User not found"
+                return {'status': 0 }
             print "url = %s\n\n" % url
             print json.dumps(data, indent=4, sort_keys=True)
             print "Error: %s " % data['error']
@@ -115,6 +121,7 @@ for user in users:
         sys.exit(results['status'])
     results = addUserIdToChannel(server, channel, results['userId'])
     if ( results['status'] > 0 ):
+        if results['error'] == ""
         sys.exit(results['status'])
 
 sys.exit(0)

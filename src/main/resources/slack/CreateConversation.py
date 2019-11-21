@@ -99,6 +99,9 @@ try:
     myResponse = urllib2.urlopen(request)
     data = json.load(myResponse)
     if( not data['ok'] ):
+        if( data['error'] == "user_not_found" ):
+            print "Oops,  User not found"
+            return {'status': 0 }
         print "url = %s\n\n" % url
         print "```"
         print json.dumps(data, indent=4, sort_keys=True)

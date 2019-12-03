@@ -29,7 +29,7 @@
 
     <type type="slack.Notification" extends="slack.Task">
         <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
-        <property name="message" category="input" label="Message" description="The notification message text" required="true"/>
+        <property name="message" category="input" label="Message" description="The notification message text" size="large" required="true"/>
     </type>
 
     <type type="slack.CreateChannel" extends="slack.Task">
@@ -52,7 +52,7 @@
     <type type="slack.postMessage" extends="slack.Task">
         <property name="channelId" category="input" label="Channel ID" description="The channel ID"
         required="true"/>
-        <property name="message" category="input" label="Message" description="The notification message text" required="true"/>
+        <property name="message" category="input" label="Message" description="The notification message text" size="large" required="true"/>
     </type>
 
 </synthetic>

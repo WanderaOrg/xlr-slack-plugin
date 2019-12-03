@@ -62,7 +62,7 @@ try:
     if icon:
         postdata = {'channel': channel.strip(), 'username': user.strip(), 'icon_emoji': icon.strip(), 'text': message.strip(), 'mrkdwn': True}
     else:
-        postdata = {'channel': channel.strip(), 'username': user.strip(), 'text': message.strip(), 'mrkdwn': True}
+        postdata = {'channel': channel.strip(), 'username': user.strip(), 'text': message, 'mrkdwn': True}
     data = json.dumps(postdata)
     response = urllib2.urlopen(request, data)
 except urllib2.HTTPError as error:

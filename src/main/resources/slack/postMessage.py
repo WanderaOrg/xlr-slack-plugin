@@ -35,7 +35,7 @@ if proxyUrl:
     urllib2.install_opener(opener)
 
 # Call Slack Incoming WebHook
-query_args = {'channel': channelId, "text": message}
+query_args = {'channel': channelId, "text": message, 'mrkdwn': True}
 encoded_args = urllib.urlencode(query_args)
 url = "%s?%s" % (url, encoded_args)
 try:

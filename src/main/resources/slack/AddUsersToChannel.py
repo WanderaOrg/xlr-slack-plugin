@@ -121,7 +121,6 @@ for user in users:
         sys.exit(results['status'])
     results = addUserIdToChannel(server, channel, results['userId'])
     if ( results['status'] > 0 ):
-        if results['error'] == ""
-        sys.exit(results['status'])
+        print "ERROR = %s " % results['error']
 
 sys.exit(0)

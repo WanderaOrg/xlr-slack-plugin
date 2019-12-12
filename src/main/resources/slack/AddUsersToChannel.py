@@ -37,7 +37,7 @@ def addUserIdToChannel(server, channel, userId):
                 print "Oops,  User not found"
                 return {'status': 0 }
             print "url = %s\n\n" % url
-            print json.dumps(data, indent=4, sort_keys=True)
+            #print json.dumps(data, indent=4, sort_keys=True)
             print "Error: %s " % data['error']
             return {'status': 100 }
     except urllib2.HTTPError as error:
@@ -68,10 +68,10 @@ def getUserIdByEmail(server, userEmail):
 
         myResponse = urllib2.urlopen(request)
         data = json.load(myResponse)
-        print json.dumps(data, indent=4, sort_keys=True)
+        #print json.dumps(data, indent=4, sort_keys=True)
         if( not data['ok'] ):
             print "url = %s\n\n" % url
-            print "Error: %s " % data['error']
+            print "Error: %s for userEmail %s\n" % (data['error'], userEmail)
             return {'status': 100, 'userId': 0 }
     except urllib2.HTTPError as error:
         print myResponse.info()
@@ -118,9 +118,12 @@ if proxyUrl:
 for user in users:
     results = getUserIdByEmail(server, user)
     if ( results['status'] > 0 ):
-        sys.exit(results['status'])
-    results = addUserIdToChannel(server, channel, results['userId'])
-    if ( results['status'] > 0 ):
-        print "ERROR = %s " % results['error']
+        #print "ERROR = %s " % results['error']
+        print "ERROR getUserIdByEmail for %s\n" % user
+    else:
+        results = addUserIdToChannel(server, channel, results['userId'])
+        if ( results['status'] > 0 ):
+            print "ERROR = %s " % results['error']
+            sys.exit(results['status'])
 
 sys.exit(0)

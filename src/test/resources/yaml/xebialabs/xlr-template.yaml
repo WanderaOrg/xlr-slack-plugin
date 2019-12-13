@@ -1,0 +1,70 @@
+#
+# Copyright 2019 XEBIALABS
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+---
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- directory: slack
+  children:
+  - template: Slack_Test
+    scheduledStartDate: 2019-10-03T13:00:00Z
+    dueDate: 2019-10-06T15:45:32.129Z
+    phases:
+    - phase: Send Messages
+      tasks:
+      - name: Send Message
+        type: slack.Notification
+        server: slackbot
+        channel: '#general'
+        message: Hello world
+      - name: Verify Message
+        type: xlrelease.GateTask
+        owner: admin
+      color: '#0099CC'
+    - phase: New Channel
+      tasks:
+      - name: Create New Channel
+        type: slack.CreateChannel
+        server: slackbot
+        channel: '#this-is-a-test'
+        variableMapping:
+          pythonScript.channelId: ${channelId}
+      - name: Send Message to new channel
+        type: slack.postMessage
+        server: slackbot
+        channelId: ${channelId}
+        message: Hello to new channel
+      - name: Verify Channel and Messages
+        type: xlrelease.GateTask
+        owner: admin
+      color: '#08B153'
+    - phase: Add Users to Channel
+      tasks:
+      - name: Add Users
+        type: slack.AddUsersToChannel
+        server: slackbot
+        channel: ${channelId}
+        users:
+        - rick_broker@yahoo.com
+      - name: Send Messages to new Users
+        type: slack.postMessage
+        server: slackbot
+        channelId: ${channelId}
+        message: Added Users
+      - name: Verify users added and Messages
+        type: xlrelease.GateTask
+        owner: admin
+      color: '#FD8D10'
+    variables:
+    - type: xlrelease.StringVariable
+      key: channelId
+      requiresValue: false
+      showOnReleaseStart: false
+    riskProfile: Default risk profile

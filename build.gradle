@@ -31,10 +31,12 @@ if (!project.hasProperty('release.useLastTag')) {
 }
 
 processResources.configure {
-  filter ReplaceTokens, tokens: [
-    'project.version': version.toString(),
-    'project.name'   : rootProject.name
-  ]
+  filesNotMatching(['**/*.png','**/*.svg']) {
+    filter ReplaceTokens, tokens: [
+      'project.version': version.toString(),
+      'project.name'   : rootProject.name
+    ]
+  }
 }
 
 license {

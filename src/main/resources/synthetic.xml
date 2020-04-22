@@ -44,6 +44,10 @@
         <property name="channelId" category="output" label="Channel ID" description="The channel ID"  />
     </type>
 
+    <type type="slack.ArchiveConversation" extends="slack.Task">
+        <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
+    </type>
+
     <type type="slack.AddUsersToChannel" extends="slack.Task">
         <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
         <property name="users" category="input" kind="list_of_string" label="Users" description="A list of users to add to a channel" required="true"/>

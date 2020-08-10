@@ -1,14 +1,48 @@
 // Plugins to use
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
-    id "java"
-    id "com.github.hierynomus.license" version "0.13.0"
+    id "com.github.hierynomus.license" version "0.14.0"
+    id "nebula.release" version "6.0.0"
+    id "com.xebialabs.xl.docker" version "1.1.0"
+    id "com.github.hierynomus.jython" version "0.8.0"
 }
 
-// License definition
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+xlDocker {
+  compileImage = 'xebialabsunsupported/xlr_dev_compile'
+  compileVersion = '9.0'
+  runImage = 'xebialabsunsupported/xlr_dev_run'
+  runVersion = '9.0'
+  runPortMapping = '15516:5516'
+}
+
+
+if (!project.hasProperty('release.scope')) {
+  project.ext['release.scope'] = 'patch'
+}
+
+if (!project.hasProperty('release.useLastTag')) {
+  project.ext['release.useLastTag'] = true
+}
+
+processResources.configure {
+  filesNotMatching(['**/*.png','**/*.svg']) {
+    filter ReplaceTokens, tokens: [
+      'project.version': version.toString(),
+      'project.name'   : rootProject.name
+    ]
+  }
+}
+
 license {
-    header rootProject.file('src/main/license/xebialabs_community.license')
-    strictCheck true
+  header rootProject.file('LICENSE.md')
+  excludes(["**/*.json", "**/echarts.min.js", "**/*.png"])
+  strictCheck false
+  ext.year = Calendar.getInstance().get(Calendar.YEAR)
+  ext.name = 'XEBIALABS'
 }
-
-// Project version
-version="1.0.2"

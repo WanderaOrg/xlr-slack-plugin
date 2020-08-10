@@ -9,43 +9,23 @@
 #
 
 import json
+import requests
 import urllib2
-
-
-def printData(url, data):
-    print
-    print 'URL:'
-    print '```'
-    print url
-    print '```'
-    print 'Data:'
-    print '```'
-    print data
-    print '```'
+import re
 
 # Initialize variables & check parameters
 response = ''
-url = server['url']
-user = server['userName']
-icon = server['userIcon']
+token = server['clientToken']
 proxyUrl = server['proxyUrl']
+url = "%s/chat.postMessage" % ( server['api'] )
 if not url.strip():
     print 'Error!'
     print 'Server configuration url undefined\n'
     sys.exit(100)
-if not user.strip():
+if not token.strip():
     print 'Error!'
-    print 'Server configuration user name undefined\n'
+    print 'Server configuration user token undefined\n'
     sys.exit(100)
-if not channel.strip():
-    print 'Error!'
-    print 'Parameter channel undefined\n'
-    sys.exit(200)
-if not message.strip():
-    print 'Error!'
-    print 'Parameter message undefined\n'
-    sys.exit(200)
-
 # Set up proxy
 # proxyUrl format: 'http:// username:password@proxyurl:proxyport'
 if proxyUrl:
@@ -55,31 +35,32 @@ if proxyUrl:
     urllib2.install_opener(opener)
 
 # Call Slack Incoming WebHook
+query_args = {'channel': channelId, "text": message, 'mrkdwn': True}
+encoded_args = urllib.urlencode(query_args)
+url = "%s?%s" % (url, encoded_args)
 try:
-    for item in channel.split(','):
-        request = urllib2.Request(url)
-        request.add_header('Content-Type', 'application/json')
-        postdata = {}
-        if icon:
-            postdata = {'channel': item.strip(), 'username': user.strip(), 'icon_emoji': icon.strip(), 'text': message.strip(), 'mrkdwn': True}
-        else:
-            postdata = {'channel': item.strip(), 'username': user.strip(), 'text': message.strip(), 'mrkdwn': True}
-        data = json.dumps(postdata)
-        response = urllib2.urlopen(request, data)
+    request = urllib2.Request( url )
+    request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+    request.add_header('Authorization', 'Bearer %s' % token)
+    myResponse = urllib2.urlopen(request)
+    data = json.load(myResponse)
+    if( not data['ok'] ):
+        print "url = %s\n\n" % url
+        print json.dumps(data, indent=4, sort_keys=True)
+        print "Error: %s " % data['error']
+        sys.exit(100)
 except urllib2.HTTPError as error:
+    print myResponse.info()
     print 'HTTP %s error!' % error.code
     print 'Reason: %s' % error.read()
-    printData(url, data)
+    print "url = %s" % url
     sys.exit(300)
 except urllib2.URLError as error:
+    print myResponse.info()
     print 'Network error!'
     print 'Reason: %s' % error.reason
-    printData(url, data)
+    print "url = %s" % url
     sys.exit(400)
 
 # Print output
-print 'Slack message to channel %s sent successfully' % channel
-print '```'
-print message
-print '```'
 sys.exit(0)

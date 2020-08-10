@@ -41,7 +41,65 @@ The Slack notification task needs the next information:
 
 ![notification](images/notification.png)
 
---- 
+## CreateChannel task
+This task creates a new channel in slack
+
+![CreateChannel](images/CreateChannel.png)
+
+## AddUsersToChannel
+This task adds a list of users based on their email addresses
+
+![AddUsersToChannel](images/AddUsersToChannel.png)
+
+## postMessage
+This task posts a message to a slack channel based on the channel's ID
+
+![postMessage](images/postMessage.png)
+
+## Adding Slack App
+This plugin needs a **Slack** to communicate.  You can create a custom app to to by doing the following:
+
+1. Got to [https://api.slack.com/apps](https://api.slack.com/apps) to start building your app
+
+  ![YourApps](images/yourapps.png)
+
+2. **Create a Slack App** - provide *App Name* and *Workspace*
+
+  ![createaslackapp](images/createaslackapp.png)
+
+3. **Add features and functionality** - *Incoming Webhooks* & *Permissions*
+
+  a. **Incoming Webhooks**
+
+  ![incomingwebhooks](images/incomingwebhooks.png)
+
+  Keep track of the `Webhook URL`.  This will be the URL for sending notifications.
+
+  b. **Permissions**
+
+  ![permissions](images/permissions1.png)
+  ![permissions](images/permissions2.png)
+  ![permissions](images/permissions3.png)
+
+  Add **Slack Permissions** as follows:
+  - Access information about user's public channels `channels:read`
+  - Modify your private channels `channels:write`
+  - Post to specific channels in Slack `incomming-webhook`
+  - Add a bot user with the username *@<botname>* `chat:write:bot`
+  - Access your workspace's profile information `users:read`
+  - View email addresses of people on this workspace `users:read.email`
+
+  Keep track of the `OAuth Token` and **Reinstall App**
+
+  Use the `Webhook URL` and the `OAuth Token` to configure the connection in *XL Release*
+
+
+---
 ## References:
 * [Slack Rest API](https://api.slack.com/web)
-
+* [Slack Rest API->Create Channel](https://api.slack.com/methods/channels.create)
+* [Slack Rest API->Create Conversation](https://api.slack.com/methods/conversations.create)
+* [Slack Rest API->Channels Invite](https://api.slack.com/methods/channels.invite)
+* [Slack Rest API->Users Info](https://api.slack.com/methods/users.info)
+* [Slack Rest API->Chat Post Message](https://api.slack.com/methods/chat.postMessage)
+* [Slack Rest API->lookup By Email](https://api.slack.com/methods/users.lookupByEmail)

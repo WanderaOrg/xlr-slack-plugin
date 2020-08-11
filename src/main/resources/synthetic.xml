@@ -25,12 +25,12 @@
         <property name="taskColor" hidden="true" default="#EC8022"/>
         <!-- Inputs -->
         <property name="server" category="input" label="Server" description="The Slack server definition to use" required="true" referenced-type="slack.Server" kind="ci"/>
-        <property name="channel" category="input" label="Channel" description="Comma separated targets for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
+        <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
         <property name="message" category="input" size="large" label="Message" description="The notification message text" required="true"/>
     </type>
 
     <type type="slack.Notification" extends="slack.Task">
-        <property name="channel" category="input" label="Channel" description="The target for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
+        <property name="channel" category="input" label="Channel" description="Comma separated targets for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
         <property name="message" category="input" label="Message" description="The notification message text" size="large" required="true"/>
     </type>
 

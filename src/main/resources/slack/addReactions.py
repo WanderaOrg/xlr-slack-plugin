@@ -9,9 +9,10 @@
 #
 
 import json
-import requests
 import urllib2
-import re
+import urllib
+import sys
+import ast
 
 # Initialize variables & check parameters
 token = server['clientToken']
@@ -33,11 +34,11 @@ if proxyUrl:
     opener = urllib2.build_opener(proxy, auth, urllib2.HTTPHandler)
     urllib2.install_opener(opener)
 
-slackResponses = {}
+
 try:
-    for channel in channel.split(','):
-        url = "%s/chat.postMessage" % (server['api'])
-        query_args = {'channel': channel.strip(), "text": message.strip(), 'mrkdwn': True}
+    for response in ast.literal_eval(slackMessages).values():
+        url = "%s/reactions.add" % (server['api'])
+        query_args = {'channel': response['channelId'], 'name': emojiName, 'timestamp': response['ts'] }
         encoded_args = urllib.urlencode(query_args)
         url = "%s?%s" % (url, encoded_args)
         request = urllib2.Request(url)
@@ -45,12 +46,10 @@ try:
         request.add_header('Authorization', 'Bearer %s' % token)
         myResponse = urllib2.urlopen(request)
         data = json.load(myResponse)
-        slackResponses[channel] = {"channelId": data['channel'], "ts": data['ts']}
         if not data['ok']:
             print "url = %s\n\n" % url
             print json.dumps(data, indent=4, sort_keys=True)
             print "Error: %s " % data['error']
-            sys.exit(100)
 except urllib2.HTTPError as error:
     print myResponse.info()
     print 'HTTP %s error!' % error.code

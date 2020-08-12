@@ -62,4 +62,11 @@
         <property name="slackResponses" category="output" required="false" description="Responses returned by slack"/>
     </type>
 
+    <type type="slack.addReactions" extends="slack.Task">
+        <property name="slackMessages" category="input" label="Slack message responses" description="Dictionary with slack message responses to be reacted to" required="true"/>
+        <property name="emojiName" category="input" label="Emoji name" description="Name of the emoji to be used" size="large" required="true"/>
+        <property name="channel" hidden="true" required="false" default="#delta-void" />
+        <property name="message" hidden="true" required="false" default="This message is not used" />
+    </type>
+
 </synthetic>

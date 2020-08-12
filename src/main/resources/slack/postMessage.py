@@ -14,10 +14,9 @@ import urllib2
 import re
 
 # Initialize variables & check parameters
-response = ''
 token = server['clientToken']
 proxyUrl = server['proxyUrl']
-url = "%s/chat.postMessage" % ( server['api'] )
+url = "%s/chat.postMessage" % (server['api'])
 if not url.strip():
     print 'Error!'
     print 'Server configuration url undefined\n'
@@ -34,21 +33,23 @@ if proxyUrl:
     opener = urllib2.build_opener(proxy, auth, urllib2.HTTPHandler)
     urllib2.install_opener(opener)
 
-# Call Slack Incoming WebHook
-query_args = {'channel': channelId, "text": message, 'mrkdwn': True}
-encoded_args = urllib.urlencode(query_args)
-url = "%s?%s" % (url, encoded_args)
+slackResponses = {}
 try:
-    request = urllib2.Request( url )
-    request.add_header('Content-Type', 'application/x-www-form-urlencoded')
-    request.add_header('Authorization', 'Bearer %s' % token)
-    myResponse = urllib2.urlopen(request)
-    data = json.load(myResponse)
-    if( not data['ok'] ):
-        print "url = %s\n\n" % url
-        print json.dumps(data, indent=4, sort_keys=True)
-        print "Error: %s " % data['error']
-        sys.exit(100)
+    for channel in channel.split(','):
+        query_args = {'channel': channel.strip(), "text": message.strip(), 'mrkdwn': True}
+        encoded_args = urllib.urlencode(query_args)
+        url = "%s?%s" % (url, encoded_args)
+        request = urllib2.Request(url)
+        request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        request.add_header('Authorization', 'Bearer %s' % token)
+        myResponse = urllib2.urlopen(request)
+        data = json.load(myResponse)
+        slackResponses[channel] = data
+        if not data['ok']:
+            print "url = %s\n\n" % url
+            print json.dumps(data, indent=4, sort_keys=True)
+            print "Error: %s " % data['error']
+            sys.exit(100)
 except urllib2.HTTPError as error:
     print myResponse.info()
     print 'HTTP %s error!' % error.code

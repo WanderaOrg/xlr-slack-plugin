@@ -56,9 +56,10 @@
     </type>
 
     <type type="slack.postMessage" extends="slack.Task">
-        <property name="channelId" category="input" label="Channel ID" description="The channel ID"
-        required="true"/>
+        <property name="channel" category="input" label="Channel" description="Comma separated targets for the notification, use `#` or `@` to refer to a channel or direct message" required="true"/>
         <property name="message" category="input" label="Message" description="The notification message text" size="large" required="true"/>
+
+        <property name="slackResponses" category="output" required="false" description="Responses returned by slack"/>
     </type>
 
 </synthetic>

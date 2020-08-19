@@ -37,11 +37,10 @@ slackResponses = {}
 try:
     for channel in channel.split(','):
         url = "%s/chat.postMessage" % (server['api'])
-        query_args = {'channel': channel.strip(), "text": message.strip(), 'mrkdwn': True}
-        encoded_args = urllib.urlencode(query_args)
-        url = "%s?%s" % (url, encoded_args)
+
         request = urllib2.Request(url)
-        request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        request.data = json.dumps({'channel': channel.strip(), 'text': message.decode('utf-8', errors='ignore')}, indent=2)
+        request.add_header('Content-Type', 'application/json; charset=utf-8')
         request.add_header('Authorization', 'Bearer %s' % token)
         myResponse = urllib2.urlopen(request)
         data = json.load(myResponse)
